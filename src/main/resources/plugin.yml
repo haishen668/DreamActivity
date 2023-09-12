@@ -6,3 +6,7 @@ depend: [DreamPainter]
 authors: [haishen668]
 description: 一款绘梦师附属插件
 website: www.dreamcraft.ltd
+commands:
+  DreamActivity:
+    aliases:
+      - "day"

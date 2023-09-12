@@ -1,0 +1,85 @@
+reward:
+  # 每日在线时间奖励
+  # 不要更改这四个time1 2 3 4 节点的名称
+  time1:
+    # 在线1分钟即可领取奖励
+    value: 60
+    Success: "§c恭喜你成功领取了§a60分钟§c在线奖励"
+    Failed: "§7你的在线时间仅有§c%value%§7分钟，不足以领取该奖励"
+    Already: "§c你已经领取过该奖励了"
+    commands:
+      - "[console]mm items give %player% 幸运羽毛 1"
+      - "[op]mm items give %player% 一小撮金币 1"
+  time2:
+    # 在线10分钟即可领取奖励
+    value: 120
+    Success: "§c恭喜你成功领取了§a120分钟§c在线奖励"
+    Failed: "§7你的在线时间仅有§c%value%§7分钟，不足以领取该奖励"
+    Already: "§c你已经领取过该奖励了"
+    commands:
+      - "[console]mm items give %player% 一小撮金币 1"
+      - "[op]mm items give %player% 卓越祝福券 1"
+  time3:
+    # 在线20分钟即可领取奖励
+    value: 240
+    Success: "§c恭喜你成功领取了§a240分钟§c在线奖励"
+    Failed: "§7你的在线时间仅有§c%value%§7分钟，不足以领取该奖励"
+    Already: "§c你已经领取过该奖励了"
+    commands:
+      - "[console]mm items give %player% 一小撮金币 3"
+      - "[op]mm items give %player% 卓越祝福券 1"
+  time4:
+    # 在线30分钟即可领取奖励
+    value: 320
+    Success: "§c恭喜你成功领取了§a60分钟§c在线奖励"
+    Failed: "§7你的在线时间仅有§c%value%§7分钟，不足以领取该奖励"
+    Already: "§c你已经领取过该奖励了"
+    commands:
+      - "[console]mm items give %player% 封号斗罗宝库钥匙 1"
+      - "[op]mm items give %player% 一堆金币 1"
+  # 累计 领取过多少次阶段奖励 的奖励
+  # 不要更改这四个count1 2 3 4节点的名称
+  count1:
+    # 累计领取过10次在线时间奖励 后可领取奖励
+    value: 30
+    Success: "§c恭喜你成功领取了 累计30次 在线奖励"
+    Failed: "§c你的累计领取次数仅有§a%value%次§c，不足以领取该奖励"
+    Already: "§c你已经领取过该奖励了"
+    commands:
+      - "[console]mm items give %player% 封号斗罗宝库钥匙 3"
+      - "[op]mm items give %player% 武魂天选宝库钥匙 1"
+      - "[op]mm items give %player% 幸运时装钥匙 5"
+      - "[op]mm items give %player% 卷轴宝库钥匙 5"
+  count2:
+    # 累计领取过20次在线时间奖励 后可领取奖励
+    value: 50
+    Success: "§c恭喜你成功领取了 累计50次 在线奖励"
+    Failed: "§c你的累计领取次数仅有§a%value%次§c，不足以领取该奖励"
+    Already: "§c你已经领取过该奖励了"
+    commands:
+      - "[console]mm items give %player% 封号斗罗宝库钥匙 10"
+      - "[op]mm items give %player% 超级斗罗宝库钥匙 3"
+      - "[op]mm items give %player% 幸运时装钥匙 5"
+      - "[op]mm items give %player% 武魂强化石 3"
+  count3:
+    # 累计领取过30次在线时间奖励 后可领取奖励
+    value: 100
+    Success: "§c恭喜你成功领取了 累计100次 在线奖励"
+    Failed: "§c你的累计领取次数仅有§a%value%次§c，不足以领取该奖励"
+    Already: "§c你已经领取过该奖励了"
+    commands:
+      - "[console]mm items give %player% 极限斗罗宝库钥匙 2"
+      - "[op]mm items give %player% 超级斗罗宝库钥匙 10"
+      - "[op]mm items give %player% 幸运时装钥匙 5"
+      - "[op]mm items give %player% 武魂强化石 5"
+  count4:
+    # 累计领取过40次在线时间奖励 后可领取奖励
+    value: 200
+    Success: "§c恭喜你成功领取了 累计200次 在线奖励"
+    Failed: "§c你的累计领取次数仅有§a%value%次§c，不足以领取该奖励"
+    Already: "§c你已经领取过该奖励了"
+    commands:
+      - "[console]mm items give %player% 极限斗罗宝库钥匙 2"
+      - "[op]mm items give %player% 超级斗罗宝库钥匙 10"
+      - "[op]mm items give %player% 幸运时装钥匙 5"
+      - "[op]mm items give %player% 武魂强化石 10"

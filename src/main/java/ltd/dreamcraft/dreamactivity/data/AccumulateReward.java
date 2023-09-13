@@ -5,7 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import java.util.List;
 
 
-public class AccumulateReward {
+public class AccumulateReward implements Rewardable {
     //节点名
     private String SectionName;
     //需要的在线时间

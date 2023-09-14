@@ -22,8 +22,8 @@ public class AccumulateReward implements Rewardable {
     public AccumulateReward(ConfigurationSection section) {
         this.SectionName = section.getName();
         this.value = section.getInt("value");
-        this.SuccessMessage = section.getString("messageSuccess");
-        this.FailedMessage = section.getString("messageFailed");
+        this.SuccessMessage = section.getString("Success");
+        this.FailedMessage = section.getString("Failed");
         this.commands = section.getStringList("commands");
     }
 

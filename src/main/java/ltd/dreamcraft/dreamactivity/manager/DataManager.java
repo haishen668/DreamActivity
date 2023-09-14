@@ -32,6 +32,8 @@ public class DataManager {
     public void init() {
         //初始化config.yml配置文件
         initConfig();
+        //注册绘梦师界面
+        initScreen();
     }
 
     public List<OnlineReward> getOnlineReward() {
@@ -64,6 +66,29 @@ public class DataManager {
 
     }
 
+    private void initScreen() {
+        File folder = new File("plugins/DreamAuthMe/screen");
+
+        // 检查文件夹是否存在，如果不存在则创建它
+        if (!folder.exists()) {
+            if (folder.mkdirs()) {
+//                getConsoleSender().sendMessage("§b|> §e成功创建 'plugins/DreamAuthMe/screen' 文件夹!");
+            } else {
+                getConsoleSender().sendMessage("§c|> §4无法创建 'plugins/DreamAuthMe/screen' 文件夹!");
+                return; // 如果无法创建文件夹，退出方法，避免后续复制失败
+            }
+        }
+
+        // 继续检查并复制配置文件
+        File file1 = new File(folder, "DreamAuthMeLogin.yml");
+
+
+        if (!file1.exists()) {
+            DreamActivity.in().saveResource("screen/DreamActivity.yml", false);
+        }
+
+
+    }
     /**
      * 读取配置文件中的在线时间奖励 和 累积次数奖励
      *

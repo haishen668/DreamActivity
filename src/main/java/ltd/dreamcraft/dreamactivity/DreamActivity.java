@@ -6,6 +6,8 @@ import ltd.dreamcraft.dreamactivity.manager.DataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import priv.seventeen.artist.dreampainter.api.DreamPainterScreenAPI;
+import priv.seventeen.artist.dreampainter.api.screen.DreamPainterScreen;
 
 import java.util.HashMap;
 
@@ -16,6 +18,7 @@ public final class DreamActivity extends JavaPlugin {
         return getPlugin(DreamActivity.class);
     }
 
+    public static DreamPainterScreen DreamActivity;
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new PlayerJoinQuitEvent(), this);
@@ -31,6 +34,11 @@ public final class DreamActivity extends JavaPlugin {
         //初始化 配置文件
         DataManager dataManager = new DataManager();
         dataManager.init();
+        //在插件中注册screen
+        DreamActivity = new DreamPainterScreen(this, "screen/DreamActivity");
+        DreamPainterScreenAPI.registerScreen(DreamActivity);
+        DreamActivity.reload();
+        getConsoleSender().sendMessage("§b|> §e成功载入3个screen");
     }
 
     @Override
@@ -42,5 +50,7 @@ public final class DreamActivity extends JavaPlugin {
             DataManager.joinTimeMap.put(player.getUniqueId(), Long.valueOf(System.currentTimeMillis()));
             PlayerJoinQuitEvent.updatePanelInfo(player);
         }
+        DreamPainterScreenAPI.unRegisterScreen(DreamActivity);
+        getLogger().info("插件被卸载,screen页面已被删除");
     }
 }

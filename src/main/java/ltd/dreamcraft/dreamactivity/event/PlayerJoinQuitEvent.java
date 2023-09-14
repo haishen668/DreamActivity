@@ -11,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import priv.seventeen.artist.dreampainter.api.shimmer.ShimmerValue;
+import priv.seventeen.artist.dreampainter.modules.S;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +27,7 @@ public class PlayerJoinQuitEvent implements Listener {
         DataManager.joinTimeMap.put(player.getUniqueId(), Long.valueOf(System.currentTimeMillis()));
         System.out.println(DataManager.joinTimeMap);
         Bukkit.getScheduler().runTaskLater(DreamActivity.in(), () -> updatePanelInfo(player), 40L);
+
     }
 
     @EventHandler
@@ -92,13 +95,21 @@ public class PlayerJoinQuitEvent implements Listener {
             if (i == 0)
                 next_count = reward.getValue();
         }
-        Map<String, String> placeholder = new LinkedHashMap<>();
-        placeholder.put("activity_time", String.valueOf(time_max - time));
-        placeholder.put("activity_time_max", String.valueOf(time_max));
-        placeholder.put("activity_step", String.valueOf(step));
-        placeholder.put("activity_count", String.valueOf(count));
-        placeholder.put("activity_count_next", String.valueOf(next_count));
+//        Map<String, String> placeholder = new LinkedHashMap<>();
+//        placeholder.put("activity_time", String.valueOf(time_max - time));
+//        placeholder.put("activity_time_max", String.valueOf(time_max));
+//        placeholder.put("activity_step", String.valueOf(step));
+//        placeholder.put("activity_count", String.valueOf(count));
+//        placeholder.put("activity_count_next", String.valueOf(next_count));
         //PacketSender.sendSyncPlaceholder(player, placeholder);
+        DreamActivity.DreamActivity.open(player);
+        String activity_time = String.valueOf(time_max - time);
+        String activity_time_max = String.valueOf(time_max);
+        String activity_step = String.valueOf(step);
+        String activity_count = String.valueOf(count);
+        String activity_count_next = String.valueOf(next_count);
+        DreamActivity.DreamActivity.runShimmerCode(player, "init(" + activity_time + "," + activity_time_max + "," + activity_step + "," + activity_count + ");");
+        DreamActivity.DreamActivity.runShimmerFunction(player, "init", new ShimmerValue[]{});
     }
 
     public static void updateJoinTimeMap(Player player) {

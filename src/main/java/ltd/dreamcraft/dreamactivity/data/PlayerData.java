@@ -56,7 +56,7 @@ public class PlayerData {
     }
 
     public boolean update() {
-        if (PlayerJoinQuitEvent.isSameData(this.refreshDate, System.currentTimeMillis())) {
+        if (!PlayerJoinQuitEvent.isSameData(this.refreshDate, System.currentTimeMillis())) {
             this.refreshDate = System.currentTimeMillis();
             this.todayOnlineSecond = 0;
             this.rewardList.removeIf(l -> l.startsWith("time"));

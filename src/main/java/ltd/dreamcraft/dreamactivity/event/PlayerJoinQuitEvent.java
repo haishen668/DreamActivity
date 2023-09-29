@@ -11,13 +11,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import priv.seventeen.artist.dreampainter.api.shimmer.ShimmerValue;
-import priv.seventeen.artist.dreampainter.modules.S;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class PlayerJoinQuitEvent implements Listener {
 
@@ -39,7 +38,7 @@ public class PlayerJoinQuitEvent implements Listener {
         if (DataManager.joinTimeMap.containsKey(player.getUniqueId())) {
             System.out.println(player.getName() + "quit server");
             PlayerData playerData = new PlayerData(DataManager.getData(player.getName()));
-            playerData.update();
+            System.out.println(playerData.update());
             updateJoinTimeMap(player);
             playerData.setTodayOnlineSecond(playerData.getTodayOnlineSecond() + getPlayerOnlineSecond(player));
             System.out.println(playerData.getTodayOnlineSecond());
@@ -109,7 +108,6 @@ public class PlayerJoinQuitEvent implements Listener {
         String activity_count = String.valueOf(count);
         String activity_count_next = String.valueOf(next_count);
         DreamActivity.DreamActivity.runShimmerCode(player, "init(" + activity_time + "," + activity_time_max + "," + activity_step + "," + activity_count + ");");
-        DreamActivity.DreamActivity.runShimmerFunction(player, "init", new ShimmerValue[]{});
     }
 
     public static void updateJoinTimeMap(Player player) {
@@ -121,13 +119,9 @@ public class PlayerJoinQuitEvent implements Listener {
     }
 
     public static boolean isSameData(long time1, long time2) {
-        Calendar cal1 = Calendar.getInstance();
-        cal1.setTime(new Date(time1));
-        Calendar cal2 = Calendar.getInstance();
-        cal2.setTime(new Date(time2));
-        boolean isSameYear = (cal1.get(1) == cal2.get(1));
-        boolean isSameMonth = (isSameYear && cal1.get(2) == cal2.get(2));
-        return (isSameMonth && cal1.get(5) == cal2.get(5));
+        LocalDate date1 = Instant.ofEpochMilli(time1).atZone(ZoneId.of("Asia/Shanghai")).toLocalDate();
+        LocalDate date2 = Instant.ofEpochMilli(time2).atZone(ZoneId.of("Asia/Shanghai")).toLocalDate();
+        return date1.isEqual(date2);
     }
 
     public static Long getTodayZeroPointTimestamps() {

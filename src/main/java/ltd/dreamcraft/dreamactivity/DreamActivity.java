@@ -38,7 +38,7 @@ public final class DreamActivity extends JavaPlugin {
         DreamActivity = new DreamPainterScreen(this, "screen/DreamActivity");
         DreamPainterScreenAPI.registerScreen(DreamActivity);
         DreamActivity.reload();
-        getConsoleSender().sendMessage("§b|> §e成功载入3个screen");
+        getConsoleSender().sendMessage("§b|> §e成功载入1个screen");
     }
 
     @Override

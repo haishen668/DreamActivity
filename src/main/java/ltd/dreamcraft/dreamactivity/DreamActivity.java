@@ -1,6 +1,7 @@
 package ltd.dreamcraft.dreamactivity;
 
 import ltd.dreamcraft.dreamactivity.event.PlayerJoinQuitEvent;
+import ltd.dreamcraft.dreamactivity.event.handleCustomPacketEvent;
 import ltd.dreamcraft.dreamactivity.manager.Commands;
 import ltd.dreamcraft.dreamactivity.manager.DataManager;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ public final class DreamActivity extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new PlayerJoinQuitEvent(), this);
+        getServer().getPluginManager().registerEvents(new handleCustomPacketEvent(), this);
         this.getCommand("DreamActivity").setExecutor(new Commands());
         getConsoleSender().sendMessage("¡ì3 ____                              _        _   _       _ _ ");
         getConsoleSender().sendMessage("¡ì3|  _ \\ _ __ ___  __ _ _ __ ___    / \\   ___| |_(_)_   _(_) |_ _   _");

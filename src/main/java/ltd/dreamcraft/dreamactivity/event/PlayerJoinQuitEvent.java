@@ -15,8 +15,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
 
 public class PlayerJoinQuitEvent implements Listener {
 
@@ -107,7 +105,7 @@ public class PlayerJoinQuitEvent implements Listener {
         String activity_step = String.valueOf(step);
         String activity_count = String.valueOf(count);
         String activity_count_next = String.valueOf(next_count);
-        DreamActivity.DreamActivity.runShimmerCode(player, "init(" + activity_time + "," + activity_time_max + "," + activity_step + "," + activity_count + ");");
+        DreamActivity.DreamActivity.runShimmerCode(player, "init(" + activity_time + "," + activity_time_max + "," + activity_step + "," + activity_count + "," + activity_count_next + ");");
     }
 
     public static void updateJoinTimeMap(Player player) {

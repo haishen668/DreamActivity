@@ -22,7 +22,6 @@ public class PlayerJoinQuitEvent implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         DataManager.joinTimeMap.put(player.getUniqueId(), Long.valueOf(System.currentTimeMillis()));
-        System.out.println(DataManager.joinTimeMap);
         Bukkit.getScheduler().runTaskLater(DreamActivity.in(), () -> updatePanelInfo(player), 40L);
 
     }
@@ -34,12 +33,10 @@ public class PlayerJoinQuitEvent implements Listener {
 
     public static void save(Player player) {
         if (DataManager.joinTimeMap.containsKey(player.getUniqueId())) {
-            System.out.println(player.getName() + "quit server");
             PlayerData playerData = new PlayerData(DataManager.getData(player.getName()));
-            System.out.println(playerData.update());
+            playerData.update();
             updateJoinTimeMap(player);
             playerData.setTodayOnlineSecond(playerData.getTodayOnlineSecond() + getPlayerOnlineSecond(player));
-            System.out.println(playerData.getTodayOnlineSecond());
             DataManager.setData(player.getName(), playerData.save());
             DataManager.joinTimeMap.remove(player.getUniqueId());
         }
@@ -52,9 +49,7 @@ public class PlayerJoinQuitEvent implements Listener {
     }
 
     public static void updatePanelInfo(Player player) {
-        System.out.println(player.getName() + 1111);
         PlayerData playerData = new PlayerData(DataManager.getData(player.getName()));
-        System.out.println(playerData);
         playerData.update();
         int totalOnlineSecond = playerData.getTodayOnlineSecond() + getPlayerOnlineSecond(player);
         int totalOnlineTime = totalOnlineSecond / 60;
@@ -92,13 +87,6 @@ public class PlayerJoinQuitEvent implements Listener {
             if (i == 0)
                 next_count = reward.getValue();
         }
-//        Map<String, String> placeholder = new LinkedHashMap<>();
-//        placeholder.put("activity_time", String.valueOf(time_max - time));
-//        placeholder.put("activity_time_max", String.valueOf(time_max));
-//        placeholder.put("activity_step", String.valueOf(step));
-//        placeholder.put("activity_count", String.valueOf(count));
-//        placeholder.put("activity_count_next", String.valueOf(next_count));
-        //PacketSender.sendSyncPlaceholder(player, placeholder);
         DreamActivity.DreamActivity.open(player);
         String activity_time = String.valueOf(time_max - time);
         String activity_time_max = String.valueOf(time_max);
@@ -127,6 +115,4 @@ public class PlayerJoinQuitEvent implements Listener {
         long oneDayTimestamps = 86400000L;
         return Long.valueOf(currentTimestamps - (currentTimestamps + 28800000L) % oneDayTimestamps);
     }
-
-
 }

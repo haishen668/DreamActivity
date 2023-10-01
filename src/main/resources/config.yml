@@ -1,3 +1,6 @@
+Settings:
+  #更新检查
+  check-update: true
 reward:
   # 每日在线时间奖励
   # 不要更改这四个time1 2 3 4 节点的名称

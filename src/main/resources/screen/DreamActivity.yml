@@ -1,9 +1,887 @@
 # Screen File
+Setting:
+  ID: "DreamActivity"
+  Cover: [ ]
+  HideHud: [ ]
+  CallEventToHud: true
+  EscClose: true
+  CurrentItemSize: "16"
+  Through: true
+  IsHud: true
+  Priority: 0
+  Imports: [ ]
+  Variables: [ ]
+  Code: |
+    static var activity_time_total;
+    static var activity_time_max_value;
+    static var Status = '关闭';
+    static fun init(activity_time,activity_time_max,activity_step,activity_count,activity_count_next){
+        choose(activity_step){
+            1 -> {
+                main.当前阶段.Text = '&#D87733第一阶段奖励';
+                main.奖励预览.NormalPath = 预览.在线奖励1.NormalPath;
+            }
+            2 -> {
+                main.当前阶段.Text = '&#D87733第二阶段奖励';
+                main.奖励预览.NormalPath = 预览.在线奖励2.NormalPath;
+            }
+            3 -> {
+                main.当前阶段.Text = '&#D87733第三阶段奖励';
+                main.奖励预览.NormalPath = 预览.在线奖励3.NormalPath;
+            }
+            4 -> {
+                main.当前阶段.Text = '&#D87733第四阶段奖励';
+                main.奖励预览.NormalPath = 预览.在线奖励4.NormalPath;
+            }
+        }
+        if(activity_time == 0){
+            main.当前阶段.Text = '&#D87733今日活跃已满';
+            预览.累积阶段文字1.Text = '&#b05c22当前已(4/4)&#b05c22阶段';
+        }
+        activity_time_total = activity_time;
+        activity_time_max_value = activity_time_max;
+        async{
+            每秒更新变量(activity_time_total);
+        }
+        预览.累积阶段文字2.Text = '&#D87733累积次数'+activity_count+'/'+activity_count_next;
+        Placeholder.setPlaceholder('activity_step',activity_step);
+    }
+    static fun 每秒更新变量(activity_time_total){
+        while(activity_time_total > 0){
+            Thread.sleep(1000);
+            activity_time_total = activity_time_total - 1;
+            var activity_time_hour = activity_time_total/3600;
+            var activity_time_minute = (activity_time_total%3600)/60;
+            var activity_time_second = (activity_time_total%3600)%60;
+            Placeholder.setPlaceholder('activity_time_hour',activity_time_hour);
+            Placeholder.setPlaceholder('activity_time_minute',activity_time_minute);
+            Placeholder.setPlaceholder('activity_time_second',activity_time_second);
+            var 倒计时 = activity_time_hour+':'+activity_time_minute+':'+activity_time_second;
+            Placeholder.setPlaceholder('倒计时',倒计时);
+            预览.累积阶段文字1.Text = '&#b05c22当前已('+Placeholder.getPlaceholder('activity_step')+'/4)&#b05c22阶段 &2'+倒计时;
+            main.当前阶段进度.Width = (103-103*activity_time_total/activity_time_max_value);
+            }
+    }
+  Actions:
+  MainGroup: "main"
+  RefreshRate: 1.0
+  BackgroundColorFirst: "0,0,0"
+  BackgroundColorSecond: "0,0,0"
+  BackgroundAlpha: "0.3F"
+  CloseDied: false
+  BlurRadius: 20.0
+  BlurValue: "0.1F"
+  AutoScale: true
+  AutoScaleWidthValue: 435.0
+  AutoScaleHeightValue: 221.0
+  ScaleValue: 3.995402298850575
+  hide: false
 Groups:
+  预览:
+    Components:
+      rewardinfo:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "background"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "40.41"
+          Alpha: "1.0"
+          Y: "68.99"
+          Height: "171.55"
+          Width: "137.79"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/rewardinfo.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      在线奖励文本:
+        Type: "Text"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.8"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "42.64"
+          Alpha: "1.0"
+          Y: "7.26"
+          Limit: "-1"
+        Texts:
+          - "&#b05c22在线奖励"
+        Tips: [ ]
+        SubAttribute:
+          font:
+            Attribute:
+              fontSize: "25.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+      在线奖励1:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "11.72"
+          Alpha: "1.0"
+          Y: "48.43"
+          Height: "22.0"
+          Width: "22.0"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/reward1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      在线奖励2:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "38.72"
+          Alpha: "1.0"
+          Y: "48.43"
+          Height: "22.0"
+          Width: "22.0"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/reward1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      在线奖励3:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "66.22"
+          Alpha: "1.0"
+          Y: "48.43"
+          Height: "22.0"
+          Width: "22.0"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/reward1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      在线奖励4:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "93.22"
+          Alpha: "1.0"
+          Y: "48.43"
+          Height: "22.0"
+          Width: "22.0"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/reward1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      领取在线奖励1按钮:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.6"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "11.72"
+          Alpha: "1.0"
+          Y: "76.13"
+          Height: "16.0"
+          Width: "37.0"
+        Texts:
+          - "领取"
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive2.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+          Release: |
+            通讯.发送('DreamActivity',List['rewards','time1']);
+      领取在线奖励2按钮:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.6"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "38.72"
+          Alpha: "1.0"
+          Y: "76.13"
+          Height: "16.0"
+          Width: "37.0"
+        Texts:
+          - "领取"
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive2.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+          Release: |
+            通讯.发送('DreamActivity',List['rewards','time2']);
+      领取在线奖励3按钮:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.6"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "66.22"
+          Alpha: "1.0"
+          Y: "76.13"
+          Height: "16.0"
+          Width: "37.0"
+        Texts:
+          - "领取"
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive2.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+          Release: |
+            通讯.发送('DreamActivity',List['rewards','time3']);
+      领取在线奖励4按钮:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.6"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "93.22"
+          Alpha: "1.0"
+          Y: "76.13"
+          Height: "16.0"
+          Width: "37.0"
+        Texts:
+          - "领取"
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive2.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+          Release: |
+            通讯.发送('DreamActivity',List['rewards','time4']);
+      累积奖励1:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "11.72"
+          Alpha: "1.0"
+          Y: "102.43"
+          Height: "22.0"
+          Width: "22.0"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/reward1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      累积奖励2:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "38.72"
+          Alpha: "1.0"
+          Y: "102.43"
+          Height: "22.0"
+          Width: "22.0"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/reward1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      累积奖励3:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "66.22"
+          Alpha: "1.0"
+          Y: "102.43"
+          Height: "22.0"
+          Width: "22.0"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/reward1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      累积奖励4:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "1.0"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "93.22"
+          Alpha: "1.0"
+          Y: "102.43"
+          Height: "22.0"
+          Width: "22.0"
+        Texts: [ ]
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/reward1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "none"
+        Actions:
+      领取累积奖励1按钮:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.6"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "11.72"
+          Alpha: "1.0"
+          Y: "130.2"
+          Height: "16.0"
+          Width: "37.0"
+        Texts:
+          - "领取"
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive2.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+          Release: |
+            通讯.发送('DreamActivity',List['rewards','count1']);
+      领取累积奖励2按钮:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.6"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "38.72"
+          Alpha: "1.0"
+          Y: "130.2"
+          Height: "16.0"
+          Width: "37.0"
+        Texts:
+          - "领取"
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive2.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+          Release: |
+            通讯.发送('DreamActivity',List['rewards','count2']);
+      领取累积奖励3按钮:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.6"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "66.22"
+          Alpha: "1.0"
+          Y: "130.2"
+          Height: "16.0"
+          Width: "37.0"
+        Texts:
+          - "领取"
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive2.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+          Release: |
+            通讯.发送('DreamActivity',List['rewards','count3']);
+      领取累积奖励4按钮:
+        Type: "Image"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.6"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "93.22"
+          Alpha: "1.0"
+          Y: "130.2"
+          Height: "16.0"
+          Width: "37.0"
+        Texts:
+          - "领取"
+        Tips: [ ]
+        SubAttribute:
+          hover:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive2.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/receive1.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          font:
+            Attribute:
+              mode: "0"
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+          Release: |
+            通讯.发送('DreamActivity',List['rewards','count4']);
+      累积阶段文字1:
+        Type: "Text"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          Center: "false"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.7"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "20.77"
+          Alpha: "1.0"
+          Y: "29.48"
+          Limit: "-1"
+        Texts:
+          - "&#b05c22当前已&a&l(activity_step/4)&#b05c22阶段  &a&l<activity_time>"
+        Tips: [ ]
+        SubAttribute:
+          font:
+            Attribute:
+              fontSize: "18.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
+      累积阶段文字2:
+        Type: "Text"
+        Lock: false
+        Attribute:
+          MiddleScale: "1.0"
+          MinDragY: "0.0"
+          Center: "true"
+          MinDragX: "0.0"
+          RotateZ: "0.0"
+          OffsetX: "0.0"
+          Scale: "0.7"
+          OffsetY: "0.0"
+          Point: "rewardinfo"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "60.92"
+          Alpha: "1.0"
+          Y: "145.15"
+          Limit: "-1"
+        Texts:
+          - "&#b05c22累积次数"
+        Tips: [ ]
+        SubAttribute:
+          font:
+            Attribute:
+              fontSize: "24.0"
+              LineSpace: "1"
+              font: "方正粗倩.ttf"
+        Actions:
   main:
     Components:
       background:
-        Actions:
+        Type: "Image"
+        Lock: false
         Attribute:
           MiddleScale: "1.0"
           MinDragY: "0.0"
@@ -15,11 +893,13 @@ Groups:
           Point: "1"
           MaxDragX: "0.0"
           MaxDragY: "0.0"
-          X: "10.93"
+          X: "32.43"
           Alpha: "1.0"
-          Y: "27.57"
-          Height: "20.0"
-          Width: "102.0"
+          Y: "33.61"
+          Height: "30.58"
+          Width: "152.34"
+        Texts: [ ]
+        Tips: [ ]
         SubAttribute:
           hover:
             Attribute:
@@ -28,7 +908,7 @@ Groups:
               OffsetY: "0.0"
           normal:
             Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/hud.png"
+              path: "[url]http://img.mcxin.cn/images/2023/09/15/background.png"
               OffsetX: "0.0"
               Alpha: "1.0"
               OffsetY: "0.0"
@@ -38,52 +918,20 @@ Groups:
               fontSize: "18.0"
               LineSpace: "1"
               font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts: [ ]
-        Lock: false
-      rewardinfo:
         Actions:
-        Attribute:
-          MiddleScale: "1.0"
-          MinDragY: "0.0"
-          MinDragX: "0.0"
-          RotateZ: "0.0"
-          OffsetX: "0.0"
-          Scale: "1.0"
-          OffsetY: "0.0"
-          Point: "background"
-          MaxDragX: "0.0"
-          MaxDragY: "0.0"
-          X: "0.0"
-          Alpha: "1.0"
-          Y: "26.74"
-          Height: "126.0"
-          Width: "102.0"
-        SubAttribute:
-          hover:
-            Attribute:
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          normal:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/background.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          font:
-            Attribute:
-              mode: "0"
-              fontSize: "18.0"
-              LineSpace: "1"
-              font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts: [ ]
-        Lock: false
+          Release: |
+            async{
+                if(Status.equalsIgnoreCase('关闭')){
+                    screen.showGroup('预览');
+                    Status = '开启';
+                }else{
+                    screen.closeGroup();
+                    Status = '关闭';
+                }
+            }
       当前阶段:
-        Actions:
+        Type: "Text"
+        Lock: false
         Attribute:
           MiddleScale: "1.0"
           MinDragY: "0.0"
@@ -95,51 +943,63 @@ Groups:
           Point: "background"
           MaxDragX: "0.0"
           MaxDragY: "0.0"
-          X: "38.01"
+          X: "39.61"
           Alpha: "1.0"
-          Y: "3.0"
+          Y: "8.16"
           Limit: "-1"
+        Texts:
+          - "&#D87733第n阶段奖励"
+        Tips: [ ]
         SubAttribute:
           font:
             Attribute:
-              fontSize: "18.0"
+              fontSize: "23.0"
               LineSpace: "1"
-              font: "none"
-        Type: "Text"
-        Tips: [ ]
-        Texts:
-          - "&e&l第一阶段奖励"
-        Lock: false
-      在线奖励文本:
+              font: "方正粗倩.ttf"
         Actions:
+      当前阶段进度底图:
+        Type: "Image"
+        Lock: false
         Attribute:
           MiddleScale: "1.0"
           MinDragY: "0.0"
           MinDragX: "0.0"
           RotateZ: "0.0"
           OffsetX: "0.0"
-          Scale: "0.8"
+          Scale: "1.0"
           OffsetY: "0.0"
-          MaxDragX: "0.0"
-          MaxDragY: "0.0"
-          X: "36.04"
-          Alpha: "1.0"
-          Y: "35.34"
-          Limit: "-1"
           Point: "background"
+          MaxDragX: "0.0"
+          MaxDragY: "0.0"
+          X: "39.61"
+          Alpha: "1.0"
+          Y: "19.7"
+          Height: "4.19"
+          Width: "77.4"
+        Texts: [ ]
+        Tips: [ ]
         SubAttribute:
+          hover:
+            Attribute:
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
+          normal:
+            Attribute:
+              path: "[url]http://img.mcxin.cn/images/2023/09/30/97dca97b7d8e1e2fd10a8ff0bf2d3849.png"
+              OffsetX: "0.0"
+              Alpha: "1.0"
+              OffsetY: "0.0"
           font:
             Attribute:
+              mode: "0"
               fontSize: "18.0"
               LineSpace: "1"
               font: "none"
-        Type: "Text"
-        Tips: [ ]
-        Texts:
-          - "&e&l在线奖励"
-        Lock: false
-      在线奖励1:
         Actions:
+      当前阶段进度:
+        Type: "Image"
+        Lock: false
         Attribute:
           MiddleScale: "1.0"
           MinDragY: "0.0"
@@ -148,14 +1008,16 @@ Groups:
           OffsetX: "0.0"
           Scale: "1.0"
           OffsetY: "0.0"
-          Point: "rewardinfo"
+          Point: "background"
           MaxDragX: "0.0"
           MaxDragY: "0.0"
-          X: "14.04"
+          X: "39.61"
           Alpha: "1.0"
-          Y: "38.92"
-          Height: "10.67"
-          Width: "10.67"
+          Y: "19.69"
+          Height: "4.18"
+          Width: "78.17"
+        Texts: [ ]
+        Tips: [ ]
         SubAttribute:
           hover:
             Attribute:
@@ -164,7 +1026,7 @@ Groups:
               OffsetY: "0.0"
           normal:
             Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/q314.png"
+              path: "[url]http://img.mcxin.cn/images/2023/09/30/ea6630aa4ee8abef8ca7b141a6d316c0.png"
               OffsetX: "0.0"
               Alpha: "1.0"
               OffsetY: "0.0"
@@ -174,12 +1036,10 @@ Groups:
               fontSize: "18.0"
               LineSpace: "1"
               font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts: [ ]
-        Lock: false
-      在线奖励2:
         Actions:
+      奖励预览:
+        Type: "Image"
+        Lock: false
         Attribute:
           MiddleScale: "1.0"
           MinDragY: "0.0"
@@ -188,54 +1048,16 @@ Groups:
           OffsetX: "0.0"
           Scale: "1.0"
           OffsetY: "0.0"
-          Point: "rewardinfo"
+          Point: "background"
           MaxDragX: "0.0"
           MaxDragY: "0.0"
-          X: "36.04"
+          X: "11.4"
           Alpha: "1.0"
-          Y: "38.92"
-          Height: "10.67"
-          Width: "10.67"
-        SubAttribute:
-          hover:
-            Attribute:
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          normal:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/q314.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          font:
-            Attribute:
-              mode: "0"
-              fontSize: "18.0"
-              LineSpace: "1"
-              font: "none"
-        Type: "Image"
-        Tips: [ ]
+          Y: "5.38"
+          Height: "20.0"
+          Width: "20.0"
         Texts: [ ]
-        Lock: false
-      在线奖励3:
-        Actions:
-        Attribute:
-          MiddleScale: "1.0"
-          MinDragY: "0.0"
-          MinDragX: "0.0"
-          RotateZ: "0.0"
-          OffsetX: "0.0"
-          Scale: "1.0"
-          OffsetY: "0.0"
-          Point: "rewardinfo"
-          MaxDragX: "0.0"
-          MaxDragY: "0.0"
-          X: "56.79"
-          Alpha: "1.0"
-          Y: "38.92"
-          Height: "10.67"
-          Width: "10.67"
+        Tips: [ ]
         SubAttribute:
           hover:
             Attribute:
@@ -244,7 +1066,6 @@ Groups:
               OffsetY: "0.0"
           normal:
             Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/q314.png"
               OffsetX: "0.0"
               Alpha: "1.0"
               OffsetY: "0.0"
@@ -254,242 +1075,4 @@ Groups:
               fontSize: "18.0"
               LineSpace: "1"
               font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts: [ ]
-        Lock: false
-      在线奖励4:
         Actions:
-        Attribute:
-          MiddleScale: "1.0"
-          MinDragY: "0.0"
-          MinDragX: "0.0"
-          RotateZ: "0.0"
-          OffsetX: "0.0"
-          Scale: "1.0"
-          OffsetY: "0.0"
-          Point: "rewardinfo"
-          MaxDragX: "0.0"
-          MaxDragY: "0.0"
-          X: "76.81"
-          Alpha: "1.0"
-          Y: "38.92"
-          Height: "10.67"
-          Width: "10.67"
-        SubAttribute:
-          hover:
-            Attribute:
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          normal:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/q314.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          font:
-            Attribute:
-              mode: "0"
-              fontSize: "18.0"
-              LineSpace: "1"
-              font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts: [ ]
-        Lock: false
-      领取在线奖励1按钮:
-        Actions:
-        Attribute:
-          MiddleScale: "1.0"
-          MinDragY: "0.0"
-          MinDragX: "0.0"
-          RotateZ: "0.0"
-          OffsetX: "0.0"
-          Scale: "0.6"
-          OffsetY: "0.0"
-          Point: "rewardinfo"
-          MaxDragX: "0.0"
-          MaxDragY: "0.0"
-          X: "11.78"
-          Alpha: "1.0"
-          Y: "52.36"
-          Height: "11.9"
-          Width: "25.5"
-        SubAttribute:
-          hover:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/an2.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          normal:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/an1.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          font:
-            Attribute:
-              mode: "0"
-              fontSize: "18.0"
-              LineSpace: "1"
-              font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts:
-          - "&e领取"
-        Lock: false
-      领取在线奖励2按钮:
-        Actions:
-        Attribute:
-          MiddleScale: "1.0"
-          MinDragY: "0.0"
-          MinDragX: "0.0"
-          RotateZ: "0.0"
-          OffsetX: "0.0"
-          Scale: "0.6"
-          OffsetY: "0.0"
-          Point: "rewardinfo"
-          MaxDragX: "0.0"
-          MaxDragY: "0.0"
-          X: "33.42"
-          Alpha: "1.0"
-          Y: "52.36"
-          Height: "11.9"
-          Width: "25.5"
-        SubAttribute:
-          hover:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/an2.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          normal:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/an1.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          font:
-            Attribute:
-              mode: "0"
-              fontSize: "18.0"
-              LineSpace: "1"
-              font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts:
-          - "&e领取"
-        Lock: false
-      领取在线奖励3按钮:
-        Actions:
-        Attribute:
-          MiddleScale: "1.0"
-          MinDragY: "0.0"
-          MinDragX: "0.0"
-          RotateZ: "0.0"
-          OffsetX: "0.0"
-          Scale: "0.6"
-          OffsetY: "0.0"
-          Point: "rewardinfo"
-          MaxDragX: "0.0"
-          MaxDragY: "0.0"
-          X: "54.18"
-          Alpha: "1.0"
-          Y: "52.36"
-          Height: "11.9"
-          Width: "25.5"
-        SubAttribute:
-          hover:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/an2.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          normal:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/an1.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          font:
-            Attribute:
-              mode: "0"
-              fontSize: "18.0"
-              LineSpace: "1"
-              font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts:
-          - "&e领取"
-        Lock: false
-      领取在线奖励4按钮:
-        Actions:
-        Attribute:
-          MiddleScale: "1.0"
-          MinDragY: "0.0"
-          MinDragX: "0.0"
-          RotateZ: "0.0"
-          OffsetX: "0.0"
-          Scale: "0.6"
-          OffsetY: "0.0"
-          Point: "rewardinfo"
-          MaxDragX: "0.0"
-          MaxDragY: "0.0"
-          X: "74.51"
-          Alpha: "1.0"
-          Y: "52.36"
-          Height: "11.9"
-          Width: "25.5"
-        SubAttribute:
-          hover:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/an2.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          normal:
-            Attribute:
-              path: "[url]http://img.mcxin.cn/images/2022/07/17/an1.png"
-              OffsetX: "0.0"
-              Alpha: "1.0"
-              OffsetY: "0.0"
-          font:
-            Attribute:
-              mode: "0"
-              fontSize: "18.0"
-              LineSpace: "1"
-              font: "none"
-        Type: "Image"
-        Tips: [ ]
-        Texts:
-          - "&e领取"
-        Lock: false
-Setting:
-  RefreshRate: 1.0
-  IsHud: true
-  AutoScaleWidthValue: 435.0
-  Priority: 0
-  CallEventToHud: true
-  BlurRadius: 20.0
-  HideHud: [ ]
-  ScaleValue: 3.995402298850575
-  CurrentItemSize: "16.0"
-  AutoScale: true
-  Imports: [ ]
-  BackgroundColorFirst: "0,0,0"
-  hide: false
-  Code: ""
-  Variables: [ ]
-  CloseDied: false
-  ID: "DreamActivity"
-  EscClose: false
-  Through: true
-  BlurValue: "0.1F"
-  Cover: [ ]
-  MainGroup: "main"
-  Actions:
-  BackgroundColorSecond: "0,0,0"
-  BackgroundAlpha: "0.3F"
-  AutoScaleHeightValue: 221.0
